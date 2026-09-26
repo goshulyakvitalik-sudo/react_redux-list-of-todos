@@ -51,6 +51,7 @@ export const TodoFilter: React.FC = () => {
         {query && (
           <span className="icon is-right" style={{ pointerEvents: 'all' }}>
             <button
+              data-cy="clearSearchButton"
               type="button"
               className="delete"
               onClick={() => dispatch(setQuery(''))}

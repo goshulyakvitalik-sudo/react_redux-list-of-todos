@@ -49,7 +49,7 @@ export const TodoList: React.FC = () => {
               <td className="is-vcentered">{todo.id}</td>
               <td className="is-vcentered">
                 {todo.completed && (
-                  <span className="icon">
+                  <span className="icon" data-cy="iconCompleted">
                     <i className="fas fa-check" />
                   </span>
                 )}
@@ -64,14 +64,26 @@ export const TodoList: React.FC = () => {
               </td>
               <td className="has-text-right is-vcentered">
                 <button
+                  data-cy="selectButton"
                   type="button"
                   className={classNames('button', {
                     'is-link': isSelected,
                   })}
-                  onClick={() => dispatch(setCurrentTodo(todo))}
+                  onClick={() => {
+                    if (isSelected) {
+                      dispatch(setCurrentTodo(null));
+                    } else {
+                      dispatch(setCurrentTodo(todo));
+                    }
+                  }}
                 >
                   <span className="icon">
-                    <i className="far fa-eye" />
+                    <i
+                      className={classNames('far', {
+                        'fa-eye': !isSelected,
+                        'fa-eye-slash': isSelected,
+                      })}
+                    />
                   </span>
                 </button>
               </td>
