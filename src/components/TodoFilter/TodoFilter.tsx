@@ -7,11 +7,15 @@ export const TodoFilter: React.FC = () => {
   const dispatch = useAppDispatch();
   const { query, status } = useAppSelector(state => state.filter);
 
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleStatusChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     dispatch(setStatus(event.target.value as Status));
   };
 
-  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQueryChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     dispatch(setQuery(event.target.value));
   };
 
@@ -19,7 +23,11 @@ export const TodoFilter: React.FC = () => {
     <form className="field has-addons">
       <p className="control">
         <span className="select">
-          <select value={status} onChange={handleStatusChange}>
+          <select
+            data-cy="statusSelect"
+            value={status}
+            onChange={handleStatusChange}
+          >
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="completed">Completed</option>
@@ -29,6 +37,7 @@ export const TodoFilter: React.FC = () => {
 
       <p className="control is-expanded has-icons-left has-icons-right">
         <input
+          data-cy="searchInput"
           type="text"
           className="input"
           placeholder="Search..."
@@ -41,7 +50,6 @@ export const TodoFilter: React.FC = () => {
 
         {query && (
           <span className="icon is-right" style={{ pointerEvents: 'all' }}>
-            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <button
               type="button"
               className="delete"

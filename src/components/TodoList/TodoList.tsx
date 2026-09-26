@@ -45,7 +45,7 @@ export const TodoList: React.FC = () => {
           const isSelected = currentTodo?.id === todo.id;
 
           return (
-            <tr key={todo.id}>
+            <tr key={todo.id} data-cy="todo">
               <td className="is-vcentered">{todo.id}</td>
               <td className="is-vcentered">
                 {todo.completed && (
