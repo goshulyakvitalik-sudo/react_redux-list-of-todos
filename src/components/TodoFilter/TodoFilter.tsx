@@ -7,15 +7,11 @@ export const TodoFilter: React.FC = () => {
   const dispatch = useAppDispatch();
   const { query, status } = useAppSelector(state => state.filter);
 
-  const handleStatusChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setStatus(event.target.value as Status));
   };
 
-  const handleQueryChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(event.target.value));
   };
 

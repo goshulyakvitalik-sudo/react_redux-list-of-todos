@@ -34,12 +34,18 @@ export const TodoModal: React.FC = () => {
   };
 
   return (
-    <div className="modal is-active">
-      <div className="modal-background" onClick={handleClose} />
+    <div className="modal is-active" data-cy="modal">
+      <div
+        className="modal-background"
+        onClick={handleClose}
+      />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">{`Todo #${currentTodo.id}`}</p>
+          <p className="modal-card-title" data-cy="modal-header">
+            {`Todo #${currentTodo.id}`}
+          </p>
           <button
+            data-cy="modal-close"
             type="button"
             className="delete"
             aria-label="close"
@@ -70,7 +76,11 @@ export const TodoModal: React.FC = () => {
         </section>
 
         <footer className="modal-card-foot">
-          <button type="button" className="button" onClick={handleClose}>
+          <button
+            type="button"
+            className="button"
+            onClick={handleClose}
+          >
             Close
           </button>
         </footer>
