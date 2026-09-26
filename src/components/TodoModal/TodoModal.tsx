@@ -1,41 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { setCurrentTodo } from '../../features/currentTodo';
+import { getUser } from '../../api';
+import { User } from '../../types/User';
 import { Loader } from '../Loader';
 
 export const TodoModal: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const currentTodo = useAppSelector(state => state.currentTodo);
+
+  useEffect(() => {
+    if (!currentTodo) {
+      return;
+    }
+
+    setLoading(true);
+    getUser(currentTodo.userId)
+      .then(setUser)
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [currentTodo]);
+
+  if (!currentTodo) {
+    return null;
+  }
+
+  const handleClose = () => {
+    dispatch(setCurrentTodo(null));
+  };
+
   return (
-    <div className="modal is-active" data-cy="modal">
-      <div className="modal-background" />
-
-      <Loader />
-
+    <div className="modal is-active">
+      <div className="modal-background" onClick={handleClose} />
       <div className="modal-card">
         <header className="modal-card-head">
-          <div
-            className="modal-card-title has-text-weight-medium"
-            data-cy="modal-header"
-          >
-            Todo #3
-          </div>
-
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button type="button" className="delete" data-cy="modal-close" />
+          <p className="modal-card-title">{`Todo #${currentTodo.id}`}</p>
+          <button
+            type="button"
+            className="delete"
+            aria-label="close"
+            onClick={handleClose}
+          />
         </header>
 
-        <div className="modal-card-body">
-          <p className="block" data-cy="modal-title">
-            fugiat veniam minus
-          </p>
+        <section className="modal-card-body">
+          {loading && <Loader />}
+          {!loading && (
+            <>
+              <p className="block">
+                <strong>Title: </strong>
+                {currentTodo.title}
+              </p>
+              <p className="block">
+                <strong>Status: </strong>
+                {currentTodo.completed ? 'Completed' : 'Planned'}
+              </p>
+              {user && (
+                <p className="block">
+                  <strong>User: </strong>
+                  {user.name}
+                </p>
+              )}
+            </>
+          )}
+        </section>
 
-          <p className="block" data-cy="modal-user">
-            {/* For not completed */}
-            <strong className="has-text-danger">Planned</strong>
-
-            {/* For completed */}
-            <strong className="has-text-success">Done</strong>
-            {' by '}
-            <a href="mailto:Sincere@april.biz">Leanne Graham</a>
-          </p>
-        </div>
+        <footer className="modal-card-foot">
+          <button type="button" className="button" onClick={handleClose}>
+            Close
+          </button>
+        </footer>
       </div>
     </div>
   );
