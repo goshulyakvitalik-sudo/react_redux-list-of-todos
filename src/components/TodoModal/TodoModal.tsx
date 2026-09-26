@@ -59,16 +59,18 @@ export const TodoModal: React.FC = () => {
             <>
               <p className="block">
                 <strong>Title: </strong>
-                {currentTodo.title}
+                <span data-cy="modal-title">{currentTodo.title}</span>
               </p>
               <p className="block">
                 <strong>Status: </strong>
-                {currentTodo.completed ? 'Completed' : 'Planned'}
+                <span data-cy="modal-status">
+                  {currentTodo.completed ? 'Completed' : 'Planned'}
+                </span>
               </p>
               {user && (
                 <p className="block">
                   <strong>User: </strong>
-                  {user.name}
+                  <span data-cy="modal-user">{user.name}</span>
                 </p>
               )}
             </>
@@ -77,6 +79,7 @@ export const TodoModal: React.FC = () => {
 
         <footer className="modal-card-foot">
           <button
+            data-cy="modal-close-button"
             type="button"
             className="button"
             onClick={handleClose}
