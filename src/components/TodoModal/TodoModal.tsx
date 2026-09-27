@@ -57,22 +57,18 @@ export const TodoModal: React.FC = () => {
           {loading && <Loader />}
           {!loading && (
             <>
-              <p className="block">
-                <strong>Title: </strong>
-                <span data-cy="modal-title">{currentTodo.title}</span>
+              <p className="block" data-cy="modal-title">
+                {currentTodo.title}
               </p>
-              <p className="block">
-                <strong>Status: </strong>
-                <span data-cy="modal-status">
-                  {currentTodo.completed ? 'Completed' : 'Planned'}
-                </span>
+
+              <p className="block" data-cy="modal-user">
+                {currentTodo.completed ? 'Done by ' : 'Planned by '}
+                {user ? (
+                  <a href={`mailto:${user.email}`}>{user.name}</a>
+                ) : (
+                  '...'
+                )}
               </p>
-              {user && (
-                <p className="block">
-                  <strong>User: </strong>
-                  <span data-cy="modal-user">{user.name}</span>
-                </p>
-              )}
             </>
           )}
         </section>
